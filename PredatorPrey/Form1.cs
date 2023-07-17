@@ -1,7 +1,6 @@
-using OxyPlot.Series;
 using OxyPlot;
 using OxyPlot.Legends;
-using System.Linq;
+using OxyPlot.Series;
 
 namespace PredatorPrey
 {
@@ -27,7 +26,7 @@ namespace PredatorPrey
             if (!double.TryParse(textCountPrey.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8 && e.KeyChar != 44)
                 e.Handled = true;
 
-            if((e.KeyChar == 8) && (textSpeedDownPop.Text.Last() == '0') && (textSpeedDownPop.Text.IndexOf(',') == textSpeedDownPop.Text.Length - 2))
+            if ((e.KeyChar == 8) && (textSpeedDownPop.Text.Last() == '0') && (textSpeedDownPop.Text.IndexOf(',') == textSpeedDownPop.Text.Length - 2))
             {
                 textSpeedDownPop.Text = textSpeedDownPop.Text.Substring(0, textSpeedDownPop.Text.Length - 2);
             }
@@ -51,7 +50,7 @@ namespace PredatorPrey
                 return;
             }
 
-            DrawGraph();        
+            DrawGraph();
         }
 
 
@@ -62,10 +61,10 @@ namespace PredatorPrey
             LineSeries preyPoints;
             LineSeries predatorPoints;
             preyPoints = FindPoints(out predatorPoints);
-            
+
             myModel.Series.Add(preyPoints);
             myModel.Series.Add(predatorPoints);
-           
+
             plotView1.Model = myModel;
             plotView1.Model.Legends.Add(new Legend()
             {
@@ -87,7 +86,7 @@ namespace PredatorPrey
                 MarkerFill = OxyColors.Green,
                 MarkerStrokeThickness = 1.5,
                 Color = OxyColors.Green,
-            }; 
+            };
 
             predatorPoints = new LineSeries()
             {
@@ -104,8 +103,8 @@ namespace PredatorPrey
             var countYears = 0;
 
             predatorPoints.Points.Add(new DataPoint(countYears, (int)_cCountPredators));
-            preyPoints.Points.Add(new DataPoint(countYears, (int) _nCountPreys));
-            
+            preyPoints.Points.Add(new DataPoint(countYears, (int)_nCountPreys));
+
             while (countYears <= _maxYears)
             {
                 countYears++;
@@ -133,7 +132,7 @@ namespace PredatorPrey
             {
                 textSpeedDownPop.Text = textSpeedDownPop.Text + "0";
                 textSpeedDownPop.Select(textSpeedDownPop.Text.Length - 2, 1);
-                
+
             }
 
             textSpeedDownPop.SelectionStart = textSpeedDownPop.Text.Length;
