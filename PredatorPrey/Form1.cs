@@ -1,6 +1,7 @@
 using OxyPlot.Series;
 using OxyPlot;
 using OxyPlot.Legends;
+using System.Linq;
 
 namespace PredatorPrey
 {
@@ -23,8 +24,13 @@ namespace PredatorPrey
 
         private void EnteringNumbersKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!double.TryParse(textCountPrey.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8)
+            if (!double.TryParse(textCountPrey.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8 && e.KeyChar != 44)
                 e.Handled = true;
+
+            if((e.KeyChar == 8) && (textSpeedDownPop.Text.Last() == '0') && (textSpeedDownPop.Text.IndexOf(',') == textSpeedDownPop.Text.Length - 2))
+            {
+                textSpeedDownPop.Text = textSpeedDownPop.Text.Substring(0, textSpeedDownPop.Text.Length - 2);
+            }
         }
 
 
@@ -111,6 +117,26 @@ namespace PredatorPrey
             }
 
             return preyPoints;
+        }
+
+        private void textSpeedDownPop_TextChanged(object sender, EventArgs e)
+        {
+
+            if (textSpeedDownPop.Text.Count(c => c == ',') > 1)
+                textSpeedDownPop.Text = textSpeedDownPop.Text.Substring(0, textSpeedDownPop.Text.Length - 1);
+
+
+            if ((textSpeedDownPop.Text != "") && (textSpeedDownPop.Text[0] == ','))
+                textSpeedDownPop.Text = "0" + textSpeedDownPop.Text;
+
+            if ((textSpeedDownPop.Text != "") && (textSpeedDownPop.Text.Last() == ','))
+            {
+                textSpeedDownPop.Text = textSpeedDownPop.Text + "0";
+                textSpeedDownPop.Select(textSpeedDownPop.Text.Length - 2, 1);
+                
+            }
+
+            textSpeedDownPop.SelectionStart = textSpeedDownPop.Text.Length;
         }
     }
 }
